@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -863,7 +863,38 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    -- opts = {
+    --   size = 15,
+    -- },
+    lazy = false,
+    config = function()
+      vim.keymap.set('n', '<leader>T', ':ToggleTerm name=main<CR>', { silent = true, desc = 'Toggle [T]erminal' })
 
+      require('toggleterm').setup {
+        size = 15,
+      }
+    end,
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>F', ':NvimTreeToggle<CR>', { silent = true, desc = 'Toggle [F]ile Tree' })
+
+      require('nvim-tree').setup {
+        view = {
+          width = 45,
+        },
+      }
+    end,
+  },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.

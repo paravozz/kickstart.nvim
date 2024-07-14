@@ -873,8 +873,11 @@ require('lazy').setup({
     -- },
     lazy = false,
     config = function()
-      vim.keymap.set('n', '<leader>T', ':1ToggleTerm name=main<CR>', { silent = true, desc = 'Toggle [T]erminal' })
-      vim.keymap.set('n', '<leader>GT', ':2TermExec cmd="lazygit" name=gitterm direction=float<CR>', { silent = true, desc = 'Toggle [G]it [T]erminal' })
+      vim.keymap.set('n', '<leader>TT', ':1ToggleTerm<CR>', { silent = true, desc = 'Toggle [T]erminal' })
+      vim.keymap.set('n', '<leader>T1', ':1ToggleTerm<CR>', { silent = true, desc = 'Toggle [T]erminal' })
+      vim.keymap.set('n', '<leader>T2', ':2ToggleTerm<CR>', { silent = true, desc = 'Toggle [T]erminal' })
+      vim.keymap.set('n', '<leader>T3', ':3ToggleTerm<CR>', { silent = true, desc = 'Toggle [T]erminal' })
+      vim.keymap.set('n', '<leader>GT', ':9TermExec cmd="lazygit" name=gitterm direction=float<CR>', { silent = true, desc = 'Toggle [G]it [T]erminal' })
 
       require('toggleterm').setup {
         size = 15,

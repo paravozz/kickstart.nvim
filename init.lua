@@ -162,8 +162,8 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -907,6 +907,7 @@ require('lazy').setup({
   },
   {
     'folke/trouble.nvim',
+    name = 'trouble',
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = 'Trouble',
     keys = {
@@ -915,32 +916,42 @@ require('lazy').setup({
         '<cmd>Trouble diagnostics toggle<cr>',
         desc = 'Diagnostics (Trouble)',
       },
-      {
-        '<leader>xX',
-        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-        desc = 'Buffer Diagnostics (Trouble)',
-      },
-      {
-        '<leader>cs',
-        '<cmd>Trouble symbols toggle focus=false<cr>',
-        desc = 'Symbols (Trouble)',
-      },
-      {
-        '<leader>cl',
-        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-        desc = 'LSP Definitions / references / ... (Trouble)',
-      },
-      {
-        '<leader>xL',
-        '<cmd>Trouble loclist toggle<cr>',
-        desc = 'Location List (Trouble)',
-      },
-      {
-        '<leader>xQ',
-        '<cmd>Trouble qflist toggle<cr>',
-        desc = 'Quickfix List (Trouble)',
-      },
+      -- {
+      --   '<leader>xX',
+      --   '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+      --   desc = 'Buffer Diagnostics (Trouble)',
+      -- },
+      -- {
+      --   '<leader>cs',
+      --   '<cmd>Trouble symbols toggle focus=false<cr>',
+      --   desc = 'Symbols (Trouble)',
+      -- },
+      -- {
+      --   '<leader>cl',
+      --   '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+      --   desc = 'LSP Definitions / references / ... (Trouble)',
+      -- },
+      -- {
+      --   '<leader>xL',
+      --   '<cmd>Trouble loclist toggle<cr>',
+      --   desc = 'Location List (Trouble)',
+      -- },
+      -- {
+      --   '<leader>xQ',
+      --   '<cmd>Trouble qflist toggle<cr>',
+      --   desc = 'Quickfix List (Trouble)',
+      -- },
     },
+    config = function()
+      require('trouble').setup {}
+
+      vim.keymap.set('n', '[d', function()
+        require('trouble').next { skip_groups = true, jump = true }
+      end, { desc = 'Go to Previous [D]iagnostic Trouble message' })
+      vim.keymap.set('n', ']d', function()
+        require('trouble').previous { skip_groups = true, jump = true }
+      end, { desc = 'Go to next [D]iagnostic Trouble message' })
+    end,
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

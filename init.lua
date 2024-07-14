@@ -970,6 +970,55 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'romgrk/barbar.nvim',
+    name = 'barbar',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    config = function()
+      require('barbar').setup {}
+
+      local map = vim.keymap.set
+      local opts = { noremap = true, silent = true }
+
+      -- Move to previous/next
+      map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+      map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+      -- Re-order to previous/next
+      map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+      map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+      -- Goto buffer in position...
+      map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+      map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+      map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+      map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+      map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+      map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+      map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+      map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+      map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
+      map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
+      -- Pin/unpin buffer
+      map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
+      -- Close buffer
+      map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
+      -- Wipeout buffer
+      --                 :BufferWipeout
+      -- Close commands
+      --                 :BufferCloseAllButCurrent
+      --                 :BufferCloseAllButPinned
+      --                 :BufferCloseAllButCurrentOrPinned
+      --                 :BufferCloseBuffersLeft
+      --                 :BufferCloseBuffersRight
+      map('n', '<leader>bco', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
+      map('n', '<leader>bcl', '<Cmd>BufferCloseBuffersLeft<CR>', opts)
+      map('n', '<leader>bcr', '<Cmd>BufferCloseBuffersRight<CR>', opts)
+      -- Magic buffer-picking mode
+      map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+    end,
+  },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.

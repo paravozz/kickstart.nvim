@@ -970,53 +970,110 @@ require('lazy').setup({
       },
     },
   },
+  -- {
+  --   'romgrk/barbar.nvim',
+  --   name = 'barbar',
+  --   dependencies = {
+  --     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+  --     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+  --   },
+  --   config = function()
+  --     require('barbar').setup {
+  --
+  --     }
+  --
+  --     local map = vim.keymap.set
+  --     local opts = { noremap = true, silent = true }
+  --
+  --     -- Move to previous/next
+  --     map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+  --     map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+  --     -- Re-order to previous/next
+  --     map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+  --     map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+  --     -- Goto buffer in position...
+  --     map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+  --     map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+  --     map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+  --     map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+  --     map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+  --     map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+  --     map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+  --     map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+  --     map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
+  --     map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
+  --     -- Pin/unpin buffer
+  --     map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
+  --     -- Close buffer
+  --     map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
+  --     -- Wipeout buffer
+  --     --                 :BufferWipeout
+  --     -- Close commands
+  --     --                 :BufferCloseAllButCurrent
+  --     --                 :BufferCloseAllButPinned
+  --     --                 :BufferCloseAllButCurrentOrPinned
+  --     --                 :BufferCloseBuffersLeft
+  --     --                 :BufferCloseBuffersRight
+  --     map('n', '<leader>bco', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
+  --     map('n', '<leader>bcl', '<Cmd>BufferCloseBuffersLeft<CR>', opts)
+  --     map('n', '<leader>bcr', '<Cmd>BufferCloseBuffersRight<CR>', opts)
+  --     -- Magic buffer-picking mode
+  --     map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+  --   end,
+  -- },
   {
-    'romgrk/barbar.nvim',
-    name = 'barbar',
+    'akinsho/bufferline.nvim',
+    version = '*',
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+      'nvim-tree/nvim-web-devicons',
+      'famiu/bufdelete.nvim',
     },
     config = function()
-      require('barbar').setup {}
+      require('bufferline').setup {
+        options = {
+          close_command = require('bufdelete').bufdelete,
+          offsets = {
+            {
+              filetype = 'NvimTree',
+              text = 'File Explorer',
+              text_align = 'left',
+              separator = true,
+            },
+          },
+        },
+      }
 
       local map = vim.keymap.set
       local opts = { noremap = true, silent = true }
 
       -- Move to previous/next
-      map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
-      map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+      map('n', '<A-,>', '<Cmd>BufferLineCyclePrev<CR>', opts)
+      map('n', '<A-.>', '<Cmd>BufferLineCycleNext<CR>', opts)
       -- Re-order to previous/next
-      map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
-      map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+      map('n', '<A-<>', '<Cmd>BufferLineMovePrev<CR>', opts)
+      map('n', '<A->>', '<Cmd>BufferLineMoveNext<CR>', opts)
       -- Goto buffer in position...
-      map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
-      map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
-      map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
-      map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
-      map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
-      map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
-      map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
-      map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
-      map('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
-      map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
-      -- Pin/unpin buffer
-      map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
-      -- Close buffer
-      map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
-      -- Wipeout buffer
-      --                 :BufferWipeout
-      -- Close commands
-      --                 :BufferCloseAllButCurrent
-      --                 :BufferCloseAllButPinned
-      --                 :BufferCloseAllButCurrentOrPinned
-      --                 :BufferCloseBuffersLeft
-      --                 :BufferCloseBuffersRight
-      map('n', '<leader>bco', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
-      map('n', '<leader>bcl', '<Cmd>BufferCloseBuffersLeft<CR>', opts)
-      map('n', '<leader>bcr', '<Cmd>BufferCloseBuffersRight<CR>', opts)
+      map('n', '<A-1>', '<Cmd>BufferLineGoToBuffer 1<CR>', opts)
+      map('n', '<A-2>', '<Cmd>BufferLineGoToBuffer 2<CR>', opts)
+      map('n', '<A-3>', '<Cmd>BufferLineGoToBuffer 3<CR>', opts)
+      map('n', '<A-4>', '<Cmd>BufferLineGoToBuffer 4<CR>', opts)
+      map('n', '<A-5>', '<Cmd>BufferLineGoToBuffer 5<CR>', opts)
+      map('n', '<A-6>', '<Cmd>BufferLineGoToBuffer 6<CR>', opts)
+      map('n', '<A-7>', '<Cmd>BufferLineGoToBuffer 7<CR>', opts)
+      map('n', '<A-8>', '<Cmd>BufferLineGoToBuffer 8<CR>', opts)
+      map('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<CR>', opts)
+      map('n', '<A-0>', '<Cmd>BufferLineGoToBuffer -1<CR>', opts)
+
+      -- map('n', '<A-c>', '<Cmd>BufferLineClose<CR>', opts)
+      map('n', '<A-c>', function()
+        require('bufdelete').bufdelete()
+      end, opts)
+
+      map('n', '<leader>bco', '<Cmd>BufferLineCloseOthers<CR>', opts)
+      map('n', '<leader>bcl', '<Cmd>BufferLineCloseLeft<CR>', opts)
+      map('n', '<leader>bcr', '<Cmd>BufferLineCloseRight CR>', opts)
       -- Magic buffer-picking mode
-      map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+      map('n', '<C-p>', '<Cmd>BufferLinePick<CR>', opts)
     end,
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
